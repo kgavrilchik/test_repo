@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   actualize-readme:
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     container: node:24-alpine3.21
 
