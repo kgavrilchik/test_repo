@@ -35,10 +35,8 @@ jobs:
 
       - name: Run Junie
         env:
-          JUNIE_TOKEN: ${{ secrets.JUNIE_AUTH_TOKEN }}
-        run: |
-          echo $JUNIE_TOKEN
-          junie "Actualize readme in README.md" --auth="$JUNIE_AUTH_TOKEN"
+          JUNIE_AUTH_TOKEN: ${{ secrets.JUNIE_AUTH_TOKEN }}
+        run: junie "Actualize readme in README.md" --auth="$JUNIE_AUTH_TOKEN"
 
       - name: Commit README.md if changed
         run: |
