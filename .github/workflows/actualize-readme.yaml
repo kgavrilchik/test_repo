@@ -23,20 +23,13 @@ jobs:
     container: node:24-alpine3.21
 
     steps:
-      - uses: actions/checkout@v4
-
       - name: Install Junie
         run: |
           apk update
           apk add --no-cache git curl bash
           npm install -g @jetbrains/junie-cli
 
-      - name: Check
-        run: |
-          pwd
-          ls
-          git status
-
+      - uses: actions/checkout@v4
 
       - name: Run Junie with auth
         env:
