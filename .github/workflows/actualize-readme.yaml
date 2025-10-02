@@ -7,6 +7,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write
+
 jobs:
   actualize-readme:
     if: github.event.pull_request.merged == true
