@@ -29,13 +29,23 @@ jobs:
           apk add --no-cache git curl bash
           npm install -g @jetbrains/junie-cli
 
-      - uses: actions/checkout@v4
+      - name: Check
+        run: |
+          pwd
+          ls
+          git status
 
       - name: Run Junie with auth
         env:
           JUNIE_TOKEN: ${{ secrets.JUNIE_TOKEN }}
 #        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
         run: echo "hui" >> README.md
+
+      - name: Check
+        run: |
+          pwd
+          ls
+          git status
 
       - name: Commit README if changed
         run: |
