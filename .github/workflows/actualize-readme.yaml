@@ -1,0 +1,49 @@
+name: Junie Actualize README
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+#  pull_request:
+#    types:
+#      - closed
+#    branches:
+#      - main
+
+permissions:
+  contents: write
+
+jobs:
+  actualize-readme:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    container: node:24-alpine3.21
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+
+      - name: Install Junie
+        run: npm install -g junie
+
+      - name: Run Junie with auth
+        env:
+          JUNIE_TOKEN: ${{ secrets.JUNIE_TOKEN }}
+        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
+
+      - name: Commit README if changed
+        run: |
+          git config user.name "junie[bot]"
+          git config user.email "junie[bot]@jetbrains.com"
+          
+          if ! git diff --quiet -- README.md; then
+            git add README.md
+            git commit -m "ci: actualize README.md via Junie [skip ci]"
+            git push
+          else
+            echo "No changes to README.md."
+          fi
