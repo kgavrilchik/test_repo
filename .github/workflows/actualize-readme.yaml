@@ -28,7 +28,7 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
 
       - name: Install Junie
-        run: npm install -g junie
+        run: npm install -g @jetbrains/junie-cli
 
       - name: Run Junie with auth
         env:
