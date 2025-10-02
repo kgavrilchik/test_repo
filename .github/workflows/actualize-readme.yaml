@@ -28,12 +28,16 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
 
       - name: Install Junie
-        run: npm install -g @jetbrains/junie-cli
+        run: |
+          apk update
+          apk add --no-cache git curl bash
+          npm install -g @jetbrains/junie
 
       - name: Run Junie with auth
         env:
           JUNIE_TOKEN: ${{ secrets.JUNIE_TOKEN }}
-        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
+#        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
+        run: echo "hui" >> README.md
 
       - name: Commit README if changed
         run: |
