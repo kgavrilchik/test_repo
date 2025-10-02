@@ -30,32 +30,22 @@ jobs:
         with:
           node-version: 24
 
-      - name: Check
-        run: pwd
-
-      - name: Check
-        run: ls
-
-      - name: Check
-        run: git status
-
       - name: Install Junie
         run: npm install -g @jetbrains/junie-cli
 
-      - name: Run Junie with auth
+      - name: Run Junie
         env:
           JUNIE_TOKEN: ${{ secrets.JUNIE_TOKEN }}
-#        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
-        run: echo "hui" >> README.md
+        run: junie "Actualize readme in README.md" --auth="$JUNIE_TOKEN"
 
-      - name: Commit README if changed
+      - name: Commit README.md if changed
         run: |
           git config user.name "junie[bot]"
           git config user.email "junie[bot]@jetbrains.com"
           
           if ! git diff --quiet -- README.md; then
             git add README.md
-            git commit -m "ci: actualize README.md via Junie [skip ci]"
+            git commit -m "Actualize README.md via Junie"
             git push
           else
             echo "No changes to README.md."
