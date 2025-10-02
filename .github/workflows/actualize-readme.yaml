@@ -31,7 +31,7 @@ jobs:
         run: |
           apk update
           apk add --no-cache git curl bash
-          npm install -g @jetbrains/junie
+          npm install -g @jetbrains/junie-cli
 
       - name: Run Junie with auth
         env:
