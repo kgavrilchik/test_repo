@@ -29,6 +29,8 @@ jobs:
           apk add --no-cache git curl bash
           npm install -g @jetbrains/junie-cli
 
+      - uses: actions/checkout@v4
+
       - name: Check
         run: pwd
 
