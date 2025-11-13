@@ -5,7 +5,7 @@ A minimal test repository used for demonstration, exercises, and CI checks.
 ## About
 This repository currently contains a single README file. It exists primarily for testing automation around small documentation updates.
 
-## Getting started
+## Getting started 
 - Clone or download this repo.
 - Open it in your editor to explore or modify files.
 
