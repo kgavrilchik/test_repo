@@ -1,46 +1,46 @@
 name: Junie Actualize README
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - master
+    pull_request:
+      types:
+        - closed
+      branches:
+        - main
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  actualize-readme:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+    actualize-readme:
+      if: github.event.pull_request.merged == true
+      runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            ref: ${{ github.event.pull_request.base.ref }}
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 24
 
-      - name: Install Junie
-        run: npm install -g @jetbrains/junie-cli
+        - name: Install Junie
+          run: npm install -g @jetbrains/junie-cli
 
-      - name: Run Junie
-        env:
-          JUNIE_AUTH_TOKEN: ${{ secrets.JUNIE_AUTH_TOKEN }}
-        run: junie "Actualize readme in README.md" --auth="$JUNIE_AUTH_TOKEN"
+        - name: Run Junie
+          env:
+            JUNIE_AUTH_TOKEN: ${{ secrets.JUNIE_API_KEY }}
+          run: junie "Actualize readme in README.md" --auth="$JUNIE_AUTH_TOKEN"
 
-      - name: Commit README.md if changed
-        run: |
-          git config user.name "junie[bot]"
-          git config user.email "junie[bot]@jetbrains.com"
-          
-          if ! git diff --quiet -- README.md; then
-            git add README.md
-            git commit -m "Actualize README.md via Junie"
-            git push
-          else
-            echo "No changes to README.md."
-          fi
+        - name: Commit README.md if changed
+          run: |
+            git config user.name "junie[bot]"
+            git config user.email "junie[bot]@jetbrains.com"
+
+            if ! git diff --quiet -- README.md; then
+              git add README.md
+              git commit -m "Actualize README.md via Junie"
+              git push
+            else
+              echo "No changes to README.md."
+            fi
